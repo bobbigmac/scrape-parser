@@ -1,6 +1,6 @@
 Package.describe({
   name: 'bobbigmac:scrape-parser',
-  version: '0.5.0',
+  version: '0.5.1',
   // Brief, one-line summary of the package.
   summary: 'Meteor package to scrape and parse remote webpages with definable parser specifications',
   // URL to the Git repository containing the source code for this package.
@@ -13,8 +13,9 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.0.1');
   api.use('mongo', ['server']);
-  api.use('rclai89:cheerio', ['server']);
-  api.use('anonyfox:scrape', ['server']);
+  api.use('http', ['server']);
+  api.use('rclai89:cheerio@1.0.0', ['server']);
+  api.use('anonyfox:scrape@0.0.10', ['server']);
 
   api.addFiles('models/model.js', ['server']);
   api.addFiles('scrape-parser.js', ['server']);

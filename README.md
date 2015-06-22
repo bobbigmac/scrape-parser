@@ -6,7 +6,15 @@ Define your own parsers and helpers for each site, and retrieve an object of key
 
 Will fall back to, and exposes [anonyfox:scrape](https://atmospherejs.com/anonyfox/scrape) when you don't define a parser for the url you provide.
 
-## Parser Usage
+All remote requests are made from the server.
+
+## Intention
+
+For light and customisable scrape use cases. Mainly intended for sites where you're including or organising links to pages from a manageable number of remote websites, where you want to pull in some data from their page, but either don't have, or too onerous to use a remote API.
+
+Please scrape responsibly.
+
+## Parser Usage (with helpers)
 ```
 ScrapeParser.registerHelper('toInt', function(str) {
 	return parseInt('0'+str.replace(',', ''));
@@ -16,10 +24,7 @@ ScrapeParser.registerHelper('titleLinks', function(arr) {
 	return arr && arr.map(function(str) {
 		var $ = cheerio.load(str);
 		var link = $('a.title');
-		return {
-			link: link.attr('href'),
-			title: link.text()
-		};
+		return { link: link.attr('href'), title: link.text() };
 	});
 });
 
@@ -39,19 +44,16 @@ ScrapeParser.get('http://www.reddit.com/r/javascript/');
 	topic: 'JavaScript • /r/javascript',
 	subscribers: 67215,
 	links: [
-		'/r/javascript/comments/......',
-		'https://blog.javascriptin......'
+		'/r/javascript/comments/...', ...
 	],
 	titles: [
-		'Some comments about javascript',
-		'Some blog post about javascript'
+		'Some comments about javascript', ...
 	],
 	linkTitles: [
 		{
-			link: '/r/javascript/comments/......',
+			link: '/r/javascript/comments/...',
 			title: 'Some comments about javascript'
-		}, 
-		{ ... }
+		}, ...
 	]
 }
 ```
