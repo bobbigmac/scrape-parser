@@ -1,0 +1,1 @@
+Parsers = new Mongo.Collection('scrape-parsers');
