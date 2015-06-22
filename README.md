@@ -32,8 +32,9 @@ ScrapeParser.parser('.*reddit.com.*', {
 });
 
 ScrapeParser.get('http://www.reddit.com/r/javascript/');
-
-// Parser Output
+```
+### Parser Output
+```
 { 
 	topic: 'JavaScript • /r/javascript',
 	subscribers: 67215,
@@ -58,8 +59,9 @@ ScrapeParser.get('http://www.reddit.com/r/javascript/');
 ## Fallback (no parser match for given url)
 ```
 ScrapeParser.get('https://www.meteor.com/');
-
-// Standard anonyfox:scrape Output
+```
+### Standard anonyfox:scrape Output
+```
 {
 	title: "Meteor",
 	text: "Some text from the page",
