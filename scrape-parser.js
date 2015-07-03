@@ -123,13 +123,16 @@ ScrapeParser = {
 		    		}
 		    		scanned[key] = val;
 		    	});
+	    		
+	    		scanned['scrape-parser-id'] = (''+parser._id);
 		    } else {
 					throw new Meteor.Error(400, 'url returns no body content');
 		    }
 
 	    	//TODO: Support parser output validation and raising issues to admin, recording changed page, and elegant fallback
 	    } else {
-	    	scanned = Scrape && Scrape.website(url);
+	    	scanned = (Scrape && Scrape.website(url));
+	    	scanned['scrape-parser-id'] = 'fallback';
 	    }
 
 	    return scanned;

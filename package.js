@@ -12,13 +12,26 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.0.1');
-  api.use('mongo', ['server']);
+  api.use('mongo', ['server', 'client']);
   api.use('http', ['server']);
+
+  //Tecnically templating is a weak dependency, but doesn't work if I specify weak manually
+  api.use('templating', ['client']);
+
   api.use('rclai89:cheerio@1.0.0', ['server']);
   api.use('anonyfox:scrape@0.0.10', ['server']);
 
-  api.addFiles('models/model.js', ['server']);
+  //The router and roles are weak dependencies, include them in your project if you want to access the >scrapers template at /scrapers route
+  api.use('iron:router@1.0.9', ['client'], { weak: true });
+  api.use('alanning:roles@1.2.13', ['server', 'client'], { weak: true });
+
+  api.addFiles('models/model.js', ['server', 'client']);
+
   api.addFiles('scrape-parser.js', ['server']);
+  api.addFiles('scrape-parser-publish.js', ['server']);
+
+  api.addFiles('scrape-parser.html', ['client']);
+  api.addFiles('scrape-parser-client.js', ['client']);
   
   api.export("cheerio", ['server']);
   api.export("ScrapeParser", ['server']);
