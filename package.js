@@ -35,6 +35,7 @@ Package.onUse(function(api) {
   
   api.export("cheerio", ['server']);
   api.export("ScrapeParser", ['server']);
+  api.export("ParserHelpers", ['client']);
 });
 
 Package.onTest(function(api) {

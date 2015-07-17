@@ -1,5 +1,5 @@
 
-var parseHelpers = {};
+parseHelpers = {};
 
 ScrapeParser = {
 	/**
@@ -149,6 +149,18 @@ ScrapeParser = {
 		if(name && typeof name === 'string') {
 			if(!func || (func && typeof func === 'function')) {
 				parseHelpers[name] = func;
+
+				var keys = Object.keys(parseHelpers);
+				var registered = ParserHelpers.find();
+
+				if(keys.length !== registered.count()) {
+					registered.fetch().forEach(function(oldHelper) {
+						ParserHelpers.remove({ _id: oldHelper._id });
+					});
+					keys.forEach(function(newHelper) {
+						ParserHelpers.insert({ name: newHelper });
+					});
+				}
 			} else {
 				throw new Meteor.Error(400, 'func must be a function, or undefined');
 			}

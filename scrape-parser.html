@@ -1,10 +1,109 @@
-<template name="scrapers">
+
+<template name="scraper">
 	{{#each this}}
-		HELLO {{this}}
+		{{> scraperSpec}}
 	{{/each}}
-	{{> unscrapedPaths}}
 </template>
 
-<template name="unscrapedPaths">
-	<!-- Paths for which no scraper was found -->
+<template name="scrapers">
+	{{#each this}}
+		{{> scraperLink}}
+	{{/each}}
+
+  <div class="input-group">
+		<input name="new-match" class="form-control" placeholder="Enter a new match string (string of regular expression)" />
+		<span class="input-group-btn">
+			<button class="btn btn-default addScraper">
+				<i class="glyphicon glyphicon-plus"></i>
+				Add Parser
+			</button>
+		</span>
+	</div>
+	<!-- {{> unscrapedUrls}} -->
+</template>
+
+<template name="scraperLink">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="panel panel-default">
+			  <div class="panel-body">
+			  	<span class="badge" title="{{pathKeys}}">{{pathKeyCount}} paths</span>
+			  	<a href="{{pathFor 'scraper' _id=this._id}}" class="btn btn-link"><h4><strong>{{this.match}}</strong></h4></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="scraperSpec">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			  	{{#if confirm}}
+						<button class="btn btn-link pull-right remove-parser">
+							<i class="glyphicon glyphicon-trash"></i>
+						</button>
+					{{else}}
+						<button class="btn btn-link pull-right confirm-remove-parser">
+							<i class="glyphicon glyphicon-remove"></i>
+						</button>
+					{{/if}}
+				  <div class="input-group">
+						<label class="input-group-addon">Regex</label>
+						<input type="text" class="form-control" name="match" value="{{this.match}}" placeholder="Regular expression to match url(s) against" />
+					</div>
+			  </div>
+			  <div class="panel-body">
+					{{#each paths}}
+						{{> pathEntry}}
+					{{/each}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="pathEntry">
+	<div class="form-inline clearfix">
+		<input type="text" class="form-control" name="key" value="{{this.key}}" placeholder="Field name" />
+		{{#if this.key}}
+			{{#if confirm}}
+				<button class="btn btn-link pull-right remove-path">
+					<i class="glyphicon glyphicon-trash"></i>
+				</button>
+			{{else}}
+				<button class="btn btn-link pull-right confirm-remove-path">
+					<i class="glyphicon glyphicon-remove"></i>
+				</button>
+			{{/if}}
+		{{/if}}
+
+		<input type="text" class="form-control" name="path" value="{{this.spec.path}}" placeholder="Selector" />
+		
+		<label>
+			<span>{{#if this.spec.content}}Content{{else}}Attribute{{/if}}</span>
+			<input type="checkbox" name="content" checked={{this.spec.content}} />
+		</label>
+		
+		{{#unless this.spec.content}}
+			<input type="text" class="form-control" name="attribute" value="{{this.spec.attribute}}" placeholder="Attribute" />
+		{{/unless}}
+		
+		<label>
+			<span>Multi</span>
+			<input type="checkbox" name="multi" checked={{this.spec.multi}} />
+		</label>
+
+		<select>
+			{{#each helpers}}
+				<option selected={{equals ../spec.helper this.name}}>{{this.name}}</option>
+			{{/each}}
+		</select>
+	</div>
+</template>
+
+<template name="unscrapedUrls">
+	<div class="panel panel-default unscraped-paths">
+	</div>
 </template>

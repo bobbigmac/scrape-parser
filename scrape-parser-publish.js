@@ -1,13 +1,43 @@
 
+Meteor.publish('parser-helpers', function(_id) {
+	if(this.userId && Roles && Roles.userIsInRole(this.userId, 'admin')) {
+		var filter = {};
+		if(_id) {
+			filter._id = _id;
+		}
+		return ParserHelpers.find(filter);
+	}
+	this.ready();
+});
+
 Meteor.publish('scrapers', function(_id) {
 	if(this.userId && Roles && Roles.userIsInRole(this.userId, 'admin')) {
-		//console.log('User', this.userId, 'has permission to subscribe to scrapers');
 		var filter = {};
 		if(_id) {
 			filter._id = _id;
 		}
 		return Parsers.find(filter);
 	}
-	//console.log('User', this.userId, 'DOES NOT HAVE permission to subscribe to scrapers');
 	this.ready();
+});
+
+Meteor.methods({
+	removeParser: function(parserId) {
+		if(this.userId && Roles && Roles.userIsInRole(this.userId, 'admin')) {
+			if(parserId && typeof(parserId) === 'string') {
+				return Parsers.remove({ _id: parserId });
+			}
+		}
+	},
+	removeParserPath: function(parserId, path) {
+		if(this.userId && Roles && Roles.userIsInRole(this.userId, 'admin')) {
+			if(parserId && path) {
+				var unset = {};
+				unset['paths.'+path] = "";
+				return Parsers.update({ _id: parserId }, {
+					$unset: unset
+				});
+			}
+		}
+	}
 });
