@@ -1,5 +1,5 @@
 Meteor.startup(function(){
-	if(Router) {
+	if(typeof Router !== 'undefined' && Router) {
 		var currentUser = {
 		  ready: function() {
 		    var user = Meteor.user();

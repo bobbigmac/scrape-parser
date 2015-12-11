@@ -1,6 +1,6 @@
 
 Meteor.publish('parser-helpers', function(_id) {
-	if(this.userId && Roles && Roles.userIsInRole(this.userId, 'admin')) {
+	if(this.userId && typeof Roles !== 'undefined' && Roles && Roles.userIsInRole(this.userId, 'admin')) {
 		var filter = {};
 		if(_id) {
 			filter._id = _id;
@@ -11,7 +11,7 @@ Meteor.publish('parser-helpers', function(_id) {
 });
 
 Meteor.publish('scrapers', function(_id) {
-	if(this.userId && Roles && Roles.userIsInRole(this.userId, 'admin')) {
+	if(this.userId && typeof Roles !== 'undefined' && Roles && Roles.userIsInRole(this.userId, 'admin')) {
 		var filter = {};
 		if(_id) {
 			filter._id = _id;
@@ -23,14 +23,14 @@ Meteor.publish('scrapers', function(_id) {
 
 Meteor.methods({
 	removeParser: function(parserId) {
-		if(this.userId && Roles && Roles.userIsInRole(this.userId, 'admin')) {
+		if(this.userId && typeof Roles !== 'undefined' && Roles && Roles.userIsInRole(this.userId, 'admin')) {
 			if(parserId && typeof(parserId) === 'string') {
 				return Parsers.remove({ _id: parserId });
 			}
 		}
 	},
 	removeParserPath: function(parserId, path) {
-		if(this.userId && Roles && Roles.userIsInRole(this.userId, 'admin')) {
+		if(this.userId && typeof Roles !== 'undefined' && Roles && Roles.userIsInRole(this.userId, 'admin')) {
 			if(parserId && path) {
 				var unset = {};
 				unset['paths.'+path] = "";
