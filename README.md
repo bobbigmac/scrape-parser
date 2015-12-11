@@ -16,11 +16,11 @@ Please scrape responsibly.
 
 ## Parser Usage (with helpers)
 ```
-ScrapeParser.registerHelper('toInt', function(str) {
+ScrapeParser.registerHelper('toInt', function(str, url) {
 	return parseInt('0'+str.replace(',', ''));
 });
 
-ScrapeParser.registerHelper('titleLinks', function(arr) {
+ScrapeParser.registerHelper('titleLinks', function(arr, url) {
 	return arr && arr.map(function(str) {
 		var $ = cheerio.load(str);
 		var link = $('a.title');

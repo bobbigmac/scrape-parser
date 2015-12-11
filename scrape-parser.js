@@ -119,7 +119,7 @@ ScrapeParser = {
 			    	}
 
 		    		if(parser[key].helper && typeof parseHelpers[parser[key].helper] === 'function') {
-		    			val = parseHelpers[parser[key].helper](val);
+		    			val = parseHelpers[parser[key].helper](val, url);
 		    		}
 		    		scanned[key] = val;
 		    	});
