@@ -1,6 +1,6 @@
 Package.describe({
   name: 'bobbigmac:scrape-parser',
-  version: '0.5.3',
+  version: '0.5.4',
   // Brief, one-line summary of the package.
   summary: 'Meteor package to scrape and parse remote webpages with definable parser specifications',
   // URL to the Git repository containing the source code for this package.

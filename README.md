@@ -28,6 +28,8 @@ ScrapeParser.registerHelper('titleLinks', function(arr, url) {
 	});
 });
 
+ScrapeParser.reset(); // Remove any/all stored parsers
+
 ScrapeParser.parser('.*reddit.com.*', {
 	topic: { path: 'meta[property="og:title"]', attribute: 'content' },
 	subscribers: { path: '.subscribers .number', content: true, helper: 'toInt' },
@@ -35,6 +37,8 @@ ScrapeParser.parser('.*reddit.com.*', {
 	titles: { path: 'a.title', content: true, multi: true },
 	titleLinks: { path: 'p.title', content: true, helper: 'titleLinks', multi: true },
 });
+
+ScrapeParser.resetExcept(['.*reddit.com.*']); // Remove stored parsers except those in array
 
 ScrapeParser.get('http://www.reddit.com/r/javascript/');
 ```

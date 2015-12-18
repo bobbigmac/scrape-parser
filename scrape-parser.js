@@ -13,6 +13,22 @@ ScrapeParser = {
 		});
 	},
 	/**
+ * Removes all registered parsers
+ * @return {integer}         Number of removed parsers
+ */
+	reset: function() {
+		return Parsers.remove({});
+	},
+	/**
+ * Removes all registered parsers except those with a match string in provided array
+ * @param  {array} exceptMatches    Array of match strings for the parsers to keep
+ * @return {integer}                Number of removed parsers
+ */
+	resetExcept: function(exceptMatches) {
+		exceptMatches = exceptMatches || [];
+		return Parsers.remove({ match: { $nin: exceptMatches }});
+	},
+	/**
  * Fetches, or updates a parser by match or parserId. Sets new paths if provided.
  * @param  {string} match    String representation of regular expression as given to new RegExp(match)
  * @param  {object} paths    Optional. Object of key/values where each key will parse by provided settings to a resulting parse object
