@@ -1,4 +1,5 @@
 
+import { HTTP } from "meteor/http";
 parseHelpers = {};
 
 ScrapeParser = {
@@ -100,7 +101,8 @@ ScrapeParser = {
 
 	  	var scanned = false;
 	  	if(parser) {
-	  		var response = Meteor.http.get(url);
+// 	  		var response = Meteor.http.get(url);
+			var response = HTTP.call("GET", url, {headers: {'range': "bytes=0-100"}});
 	    	var body = response && response.content;
 	    	if(body) {
 		    	var $ = cheerio.load(body);
